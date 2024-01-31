@@ -1,4 +1,4 @@
-import {fonts} from "./fonts";
+import { fonts } from "./fonts";
 import { Providers } from "./providers";
 import "./globals.css";
 

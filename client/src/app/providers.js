@@ -3,7 +3,7 @@
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
-import "@fontsource/poppins"; 
+// import "@fontsource/poppins";
 
 const theme = extendTheme({
   fonts: {
