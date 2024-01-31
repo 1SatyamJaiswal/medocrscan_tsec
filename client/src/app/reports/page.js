@@ -87,13 +87,10 @@ const Reports = () => {
                 <thead>
                   <tr>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Product
+                      Report Name
                     </th>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Quantity
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Amount
+                      Patient Name
                     </th>
                     <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Date
@@ -113,12 +110,12 @@ const Reports = () => {
                       className="bg-white hover:bg-indigo-100 hover:text-white"
                       onClick={() => console.log("clicked")}
                     >
-                      <td className="max-w-0 w-full px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <span className="text-gray-900 font-medium">
                           {transaction.name}{" "}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <span className="text-gray-900 font-medium">
                           {transaction.quantity}{" "}
                         </span>
@@ -134,16 +131,6 @@ const Reports = () => {
                       </td>
                       <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                         <time>{transaction.time}</time>
-                      </td>
-                      <td className="hidden px-6 py-4 whitespace-nowrap text-sm text-gray-500 md:block">
-                        <span
-                          className={classNames(
-                            statusStyles[transaction.status],
-                            "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
-                          )}
-                        >
-                          {transaction.status}
-                        </span>
                       </td>
                     </tr>
                   ))}

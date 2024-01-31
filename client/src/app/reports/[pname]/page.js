@@ -8,12 +8,14 @@ const people = [
     handle: "leonardkrasner",
     imageUrl:
       "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices.'
   },
   {
     name: "Floyd Miles",
     handle: "floydmiles",
     imageUrl:
       "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices.'
   },
   {
     name: "Emily Selman",
@@ -83,6 +85,7 @@ const Page = () => {
         </div>
       </div>
       <div className="flow-root mt-6">
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Reports</h2>
         <ul role="list" className="-my-5 divide-y divide-gray-200">
           {people.map((person) => <ReportCard person={person} />)}
         </ul>

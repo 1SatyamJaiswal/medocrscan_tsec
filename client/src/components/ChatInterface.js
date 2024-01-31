@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import "react-chat-elements/dist/main.css";
 import { MessageBox } from "react-chat-elements";
-import { Listbox, Transition } from "@headlessui/react";
-import { SocketContext } from "@/app/layout";
 
 function ChatInterface() {
   const [query, setQuery] = useState("");
@@ -17,7 +15,7 @@ function ChatInterface() {
       ...messages,
       { position: "right", type: "text", text: query },
     ]);
-    socket?.emit("query", { query: query });
+    //socket?.emit("query", { query: query });
   };
 
   return (
@@ -34,12 +32,6 @@ function ChatInterface() {
         ))}
       </div>
 
-      {/* <MessageBox
-        position={'left'}
-        type={'text'}
-        title={'Message Box Title'}
-        text="Here is a text type message box"
-      /> */}
       <div className="flex items-start space-x-4">
         <div className="min-w-0 flex-1">
           <div className="relative">
@@ -53,7 +45,7 @@ function ChatInterface() {
                 onChange={(e) => setQuery(e.target.value)}
                 id="comment"
                 className="block w-full py-3 border-0 resize-none sm:text-sm px-7 focus:ring-0 focus:border-white"
-                placeholder="query here"
+                placeholder="Enter your message..."
                 defaultValue={""}
                 value={query}
                 // style={}
@@ -88,3 +80,4 @@ function ChatInterface() {
 }
 
 export default ChatInterface;
+
