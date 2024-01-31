@@ -7,6 +7,7 @@ import { storage } from "@/app/firebase";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { useToast } from '@chakra-ui/react'
+import { PlusIcon } from "@heroicons/react/outline";
 
 const Upload = () => {
     const toast = useToast()
@@ -64,7 +65,8 @@ const Upload = () => {
     console.log(file)
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <button className="ml-3 inline-flex items-center pr-4 pl-2 py-2 border border-transparent rounded-md shadow-sm text-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 max-h-12" onClick={onOpen}><PlusIcon className="flex-shrink-0 h-5 w-5 text-white mx-2"
+                    aria-hidden="true"/> Upload</button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
