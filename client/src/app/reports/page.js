@@ -1,9 +1,10 @@
 import React from "react";
+import Toolbar from "@/components/Toolbar";
 
 const Reports = () => {
   return (
     <div>
-        Reports
+        <Toolbar />
     </div>
   );
 };
