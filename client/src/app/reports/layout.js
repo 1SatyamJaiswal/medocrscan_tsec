@@ -5,7 +5,6 @@ const Reports = () => {
   return (
     <>
       <Sidebar />
-      <div>Reports</div>
     </>
   );
 };

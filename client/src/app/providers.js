@@ -1,8 +1,19 @@
 // app/providers.tsx
-'use client'
+"use client";
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
+import "@fontsource/poppins"; 
 
-export function Providers(children) {
-  return <ChakraProvider>{children}</ChakraProvider>
+const theme = extendTheme({
+  fonts: {
+    heading: "Poppins",
+    body: "Poppins",
+  },
+  initialColorMode: "light",
+  useSystemColorMode: false,
+});
+
+export function Providers({ children }) {
+  return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 }
