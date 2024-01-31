@@ -1,4 +1,4 @@
-export default dibbiData = [
+const testsData = [
     {
         "table_1": [
             {
@@ -133,3 +133,6 @@ export default dibbiData = [
         ]
     }
 ]
+
+
+export { testsData }
