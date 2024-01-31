@@ -67,7 +67,7 @@ const Upload = () => {
         const formData = new FormData()
         formData.append('file', file)
         console.log(file)
-        axios.post('https://1de3-203-212-24-36.ngrok-free.app/upload/',
+        axios.post('https://1279-203-212-24-36.ngrok-free.app/upload',
             formData, {
             // headers: {
             //     'Content-Type': 'multipart/form-data'

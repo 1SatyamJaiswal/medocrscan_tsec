@@ -31,3 +31,16 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* remove scrollbar */
+.remove-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.remove-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* remove scrollbar */
