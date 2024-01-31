@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Toolbar from "@/components/Toolbar";
 
 const Reports = () => {
   return (
-    <div>Reports</div>
-  )
-}
+    <div>
+        <Toolbar />
+    </div>
+  );
+};
 
-export default Reports
+export default Reports;
