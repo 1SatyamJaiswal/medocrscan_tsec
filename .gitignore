@@ -1,0 +1,7 @@
+node_modules
+back
+content
+data.txttest2.pdf
+uploads
+__pycache__
+google-credentials.json
