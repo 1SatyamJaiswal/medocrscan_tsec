@@ -7,9 +7,11 @@ import {
 } from "@heroicons/react/solid";
 import { usePathname } from "next/navigation";
 
-const Navbar = ({current}) => {
+const Navbar = () => {
   const pathname = usePathname();
   const pathSegments = pathname.split('/').filter((segment) => segment !== '');
+  const current = pathSegments[pathSegments.length - 1];
+  const capitalizedCurrent = current.charAt(0).toUpperCase() + current.slice(1);
   return (
     <div className="px-6 py-4">
       <div>
@@ -48,7 +50,7 @@ const Navbar = ({current}) => {
       <div className="mt-2 md:flex md:items-center md:justify-between">
         <div className="flex-1 min-w-0">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-            {current}
+            {capitalizedCurrent}
           </h2>
         </div>
         <div className="mt-4 flex-shrink-0 sm:flex md:mt-0 md:ml-4 hidden">
