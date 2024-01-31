@@ -11,7 +11,8 @@ def get_data():
     # return 'Hello world'
     if request.method == 'POST':
         data = request.get_json()
-        print(data)
+        # print(data)
+        # print(data)
         file = data['filepath']
         res = func(file)
         return jsonify(res)

@@ -1,27 +1,42 @@
 import tabula
 import json
 import pandas as pd
+import math
 
 # Replace with the path to your PDF file
-pdf_path = 'test2.pdf'
+# pdf_path = 'test2.pdf'
 
 def filter_medical_reports(data):
     filtered_data = []
-    current_test = {}
+    for row in data:
+        # print(row)
+        if 'COMPLETE BLOOD COUNT;CBC' in list(row.keys()):
+            # change name of key if key is Bio. Ref. Interval
+            if 'Bio. Ref. Interval' in list(row.keys()):
+                row['Range'] = row.pop('Bio. Ref. Interval')
+            filtered_data.append(row)
+        elif 'Test Name' in list(row.keys()):
+            if 'Bio. Ref. Interval' in list(row.keys()):
+                row['Range'] = row.pop('Bio. Ref. Interval')
+            filtered_data.append(row)
+        if 'URINE EXAMINATION, ROUTINE; URINE, R/E' in list(row.values()):
+            row['Test Name'] = 'URINE'
+            if 'Bio. Ref. Interval' in list(row.keys()):
+                row['Range'] = row.pop('Bio. Ref. Interval')
+            filtered_data.append(row)
+        # for key in list(row.values()):
+        #     print(key, end = ' ')
+            # if row[key] and row[key] == None:
+            #     row[key] = ''
+        # remove nan values
+        # elif not None in row.values() and not None in row.values():
+        #     filtered_data.append(row)
 
-    for obj in data:
-        if "Test Name" in obj:
-            current_test["Test Name"] = obj["Test Name"]
-
-        if "Results" in obj:
-            current_test["Results"] = obj["Results"]
-            current_test["Units"] = obj.get("Units", "")
-            current_test["Bio. Ref. Interval"] = obj.get("Bio. Ref. Interval", "")
-
-            if current_test["Results"] is not None:
-                filtered_data.append(current_test.copy())
-                # Reset current_test for the next test
-                current_test = {}
+    for row in filtered_data:
+        for key in list(row.keys()):
+            # print(row[key])
+            if pd.isna(row[key]):
+                row[key] = ''
 
     return filtered_data
 
@@ -67,18 +82,13 @@ def func(pdf_path):
         filtered_data = filter_medical_reports(filtered_table_json)
         json_data.append({f"table_{i + 1}": filtered_data})
         table_names.append(f"table_{i + 1}")
-        # new = filter_medical_reports(filtered_table_json)
-        # print(new)
-    # f = open('data.txt', 'w')
-    # f.write(json.dumps(json_data))
-    # f.close()
-
+        
     # Print JSON data
-    for i in json_data:
-        for j in i:
-            for k in i[j]:
-                print(k)
-    # return json_data
+    # for i in json_data:
+    #     for j in i:
+    #         for k in i[j]:
+    #             print(k)
+    return json_data
 
 if __name__ == '__main__':
     func(pdf_path)
