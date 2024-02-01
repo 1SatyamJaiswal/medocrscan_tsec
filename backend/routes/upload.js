@@ -2,7 +2,7 @@ const express = require("express");
 // const cors = require("cors");
 const uploadRouter = express.Router();
 const multer = require("multer");
-const subprocess = require("subprocess");
+// const subprocess = require("subprocess");
 
 const storage2 = multer.diskStorage({
   destination: "uploads/",
@@ -29,7 +29,7 @@ const upload = multer({
 uploadRouter.post("/", upload, async (req, res) => {
   if (req.file) {
     const filepath =
-      "C:\\Users\\navne\\Desktop\\TSEC\\backend\\" + req.file.path;
+      "C:\\Users\\Prathamesh\\Desktop\\webdev\\medscannOCr\\medocrscan_tsec\\backend\\" + req.file.path;
     const response = await fetch("http://localhost:5001/get_data", {
       method: "POST",
       headers: {
@@ -37,10 +37,21 @@ uploadRouter.post("/", upload, async (req, res) => {
       },
       body: JSON.stringify({ filepath: filepath }),
     });
+    // const response = 'hello'
     const data = await response.json();
-    console.log(data);
+    console.log(data)
 
-    res.json({ status: "1", data: data });
+    // const response2 = await fetch("http://localhost:5002/get_data", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ filepath: filepath }),
+    // });
+    // const data2 = await response2.json();
+    // console.log(data2);
+
+    res.json({ status: "1", data: { data } });
     // console.log(req.file);
   } else {
     res.json({ status: "0" });

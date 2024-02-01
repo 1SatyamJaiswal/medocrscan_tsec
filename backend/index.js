@@ -3,6 +3,7 @@ const cors = require("cors");
 const { app2, storage } = require("./firebase");
 const { ref, listAll } = require("firebase/storage");
 const uploadRouter = require("./routes/upload");
+require("./service/db");
 
 const app = express();
 app.use(express.json());

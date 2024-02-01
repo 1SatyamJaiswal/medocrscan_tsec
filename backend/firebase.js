@@ -2,6 +2,7 @@
 const { initializeApp } = require("firebase/app");
 const { getAnalytics } = require("firebase/analytics");
 const { getStorage } = require("firebase/storage");
+const { getDatabase } = require("firebase/database");
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -14,11 +15,14 @@ const firebaseConfig = {
     storageBucket: "medscannerocr.appspot.com",
     messagingSenderId: "801970281568",
     appId: "1:801970281568:web:aac1508f9dfa23988cb705",
-    measurementId: "G-1PF3JYRDH1"
+    measurementId: "G-1PF3JYRDH1",
+    databaseURL: "https://medscannerocr-default-rtdb.firebaseio.com/"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
+const db = getDatabase(app);
 
-module.exports = { app, storage };
+
+module.exports = { app, storage, db };
