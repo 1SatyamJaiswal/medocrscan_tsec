@@ -70,7 +70,7 @@ const Upload = () => {
         const headers = {
             "ngrok-skip-browser-warning": "1231",
         }
-        axios.post('https://619f-203-212-24-36.ngrok-free.app/upload',
+        axios.post('https://b0f1-2401-4900-5095-5a23-a966-e6f3-1760-1ebe.ngrok-free.app/upload',
             formData, {
             headers: headers,
         }
