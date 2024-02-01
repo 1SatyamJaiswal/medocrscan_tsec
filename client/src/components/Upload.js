@@ -67,11 +67,12 @@ const Upload = () => {
         const formData = new FormData()
         formData.append('file', file)
         console.log(file)
-        axios.post('https://1279-203-212-24-36.ngrok-free.app/upload',
+        const headers = {
+            "ngrok-skip-browser-warning": "1231",
+        }
+        axios.post('https://619f-203-212-24-36.ngrok-free.app/upload',
             formData, {
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // }
+            headers: headers,
         }
         )
             .then((response) => {

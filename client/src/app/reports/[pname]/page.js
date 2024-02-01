@@ -1,37 +1,49 @@
-import React from "react";
+"use client";
+import {React, useState, useEffect} from "react";
 import { MailIcon, PhoneIcon } from "@heroicons/react/solid";
 import ReportCard from "@/components/ReportCard";
-
-const people = [
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices.'
-  },
-  {
-    name: "Floyd Miles",
-    handle: "floydmiles",
-    imageUrl:
-      "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id felis et ipsum bibendum ultrices.'
-  },
-  {
-    name: "Emily Selman",
-    handle: "emilyselman",
-    imageUrl:
-      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    name: "Kristin Watson",
-    handle: "kristinwatson",
-    imageUrl:
-      "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-];
+import axios from "axios";
+import { usePathname } from "next/navigation";
 
 const Page = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [patientInfo, setPatientInfo] = useState({
+    name: "",
+    age: "",
+    gender: "",
+    test_name: "",
+  });
+  const headers = {
+    "ngrok-skip-browser-warning": "1231",
+  };
+
+  const pname = usePathname();
+  const decoded = decodeURIComponent(pname);
+  const decoded_split = decoded.split("/");
+  const pname1 = decoded_split[decoded_split.length - 1];
+  useEffect(() => {
+    console.log(pname);
+    axios
+      .get(
+        "https://b0f1-2401-4900-5095-5a23-a966-e6f3-1760-1ebe.ngrok-free.app/upload/getPatients/"+pname1,
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        setTransactions(res.data.data[0].tests);
+        const { name, age, gender, test_name } = res.data.data[0];
+        setPatientInfo({
+          name,
+          age,
+          gender,
+          test_name
+        });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
   return (
     <div className="px-4">
       <div className="bg-white px-4 py-5 border border-gray-200 sm:px-6 rounded-xl">
@@ -47,11 +59,8 @@ const Page = () => {
               </div>
               <div className="ml-4">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Tom Cook
+                  {patientInfo.name}
                 </h3>
-                <p className="text-sm text-gray-500">
-                  <a href="#">@tom_cook</a>
-                </p>
               </div>
             </div>
           </div>
@@ -79,15 +88,15 @@ const Page = () => {
           </div>
         </div>
         <div className="mt-6 flex justify-between">
-          <p className="text-md text-gray-700">Gender: Male</p>
-          <p className="text-md text-gray-700">Age: 30</p>
-          <p className="text-md text-gray-700">Address: 123 Street, City</p>
+          <p className="text-md text-gray-700">Gender: {patientInfo.gender}</p>
+          <p className="text-md text-gray-700">Age: {patientInfo.age}</p>
+          <p className="text-md text-gray-700">Plan: {patientInfo.test_name}</p>
         </div>
       </div>
       <div className="flow-root mt-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Reports</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Tests</h2>
         <ul role="list" className="-my-5 divide-y divide-gray-200">
-          {people.map((person) => <ReportCard person={person} />)}
+          {transactions.map((person) => <ReportCard person={person} name={pname}/>)}
         </ul>
       </div>
     </div>

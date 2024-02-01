@@ -2,33 +2,36 @@
 import React from "react";
 import Toolbar from "@/components/Toolbar";
 import Upload from "@/components/Upload";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-
-const transactions = [
-  {
-    id: 1,
-    name: "Potato",
-    href: "#",
-    quantity: "10",
-    amount: "1000",
-    currency: "INR",
-    status: "sold",
-    date: "2020-07-11",
-    time: "10:45 PM",
-  },
-];
-
-const statusStyles = {
-  sold: "bg-green-100 text-green-800",
-  restock: "bg-gray-100 text-gray-800",
-};
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Reports = () => {
+  const [transactions, setTransactions] = useState([]);
+  const headers = {
+    "ngrok-skip-browser-warning": "1231",
+  };
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://b0f1-2401-4900-5095-5a23-a966-e6f3-1760-1ebe.ngrok-free.app/upload/getPatients",
+        {
+          headers: headers,
+        }
+      )
+      .then((res) => {
+        setTransactions(res.data.arr);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
   return (
     <div>
       <div className="flex justify-between px-4 items-center">
@@ -38,46 +41,7 @@ const Reports = () => {
       <h2 className="px-6 mx-auto mt-8 text-lg leading-6 font-medium text-gray-900">
         Recent Reports
       </h2>
-      {/* Activity list (smallest breakpoint only) */}
-      <div className="shadow sm:hidden">
-        <ul
-          role="list"
-          className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
-        >
-          {transactions.map((transaction) => (
-            <li key={transaction.id}>
-              <div className="block py-4 bg-white hover:bg-gray-50">
-                <span className="flex items-center space-x-4">
-                  <span className="flex-1 flex space-x-2 truncate">
-                    <span className="flex flex-col text-gray-500 text-sm truncate">
-                      <span className="truncate">{transaction.name}</span>
-                      <span>
-                        Quantity: {transaction.quantity} Amount:{" "}
-                        <span className="text-gray-900 font-medium">
-                          {transaction.amount}
-                        </span>{" "}
-                        {transaction.currency}
-                      </span>
-                      <time>
-                        {transaction.time}, {transaction.date}
-                      </time>
-                    </span>
-                  </span>
-                  <span
-                    className={classNames(
-                      statusStyles[transaction.status],
-                      "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize"
-                    )}
-                  >
-                    {transaction.status}
-                  </span>
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
+      
       {/* Activity table (small breakpoint and up) */}
       <div className="hidden sm:block">
         <div className="px-6 mx-auto">
@@ -87,26 +51,26 @@ const Reports = () => {
                 <thead>
                   <tr>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Report Name
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Patient Name
                     </th>
-                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Test Name
                     </th>
                     <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Time
+                      Age
                     </th>
                     <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Type
+                      Gender
+                    </th>
+                    <th className="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      View
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {transactions.map((transaction) => (
                     <tr
-                      key={transaction.id}
+                      key={transaction._id}
                       className="bg-white hover:bg-indigo-100 hover:text-white"
                       onClick={() => console.log("clicked")}
                     >
@@ -117,21 +81,23 @@ const Reports = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <span className="text-gray-900 font-medium">
-                          {transaction.quantity}{" "}
+                          {transaction.test_name}{" "}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                         <span className="text-gray-900 font-medium">
-                          {transaction.amount}{" "}
+                          {transaction.age}{" "}
                         </span>
-                        {transaction.currency}
                       </td>
                       <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                        <time>{transaction.date}</time>
+                        <time>{transaction.gender}</time>
                       </td>
                       <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                        <Link href={"reports/"+transaction.name} className="text-indigo-500">View</Link>
+                      </td>
+                      {/* <td className="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                         <time>{transaction.time}</time>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>

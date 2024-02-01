@@ -8,7 +8,8 @@ import {
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  const path = usePathname();
+  const pathname = decodeURIComponent(path);
   const pathSegments = pathname.split('/').filter((segment) => segment !== '');
   const current = pathSegments[pathSegments.length - 1];
   const capitalizedCurrent = current.charAt(0).toUpperCase() + current.slice(1);

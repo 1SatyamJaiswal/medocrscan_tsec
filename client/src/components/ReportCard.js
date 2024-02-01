@@ -2,27 +2,28 @@
 import React from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { Menu, Transition } from "@headlessui/react";
+import Link from "next/link";
 
-const ReportCard = ({ person }) => {
+const ReportCard = ({ person, name }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  console.log(person);
+  const abcd = Object.keys(person)[0];
+  console.log(abcd);
   return (
-    <li key={person.handle} className="py-4 px-6">
+    <li key={abcd} className="py-4 px-6">
       <div className="flex items-center space-x-4">
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-gray-900 truncate">
-            {person.name}
-          </p>
-          <p className="text-sm text-gray-500 truncate">
-            {"@" + person.handle}
+            {abcd}
           </p>
         </div>
         <div>
-          <a
-            href="#"
+          <Link
+            href={name+"/"+abcd}
             className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             View
-          </a>
+          </Link>
           <button
             type="button"
             className="mx-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
