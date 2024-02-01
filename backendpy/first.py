@@ -2,9 +2,11 @@ import tabula
 import json
 import pandas as pd
 import math
-
+import nltk
+nltk.download('averaged_perceptron_tagger')
+from PyPDF2 import PdfReader
 # Replace with the path to your PDF file
-# pdf_path = 'test2.pdf'
+pdf_path = 'test2.pdf'
 
 def filter_medical_reports(data):
     filtered_data = []
@@ -42,6 +44,24 @@ def filter_medical_reports(data):
 
 def func(pdf_path):
     # Extract tables from the PDF
+    text = ""
+    pdf_reader = PdfReader(pdf_path)
+    for page in pdf_reader.pages:
+        text += page.extract_text()
+    index_of_test_name = text.find("Test Name")
+    pattern = text[:index_of_test_name]
+    sentences = nltk.sent_tokenize(pattern)
+    nouns = []
+    for sentence in sentences:
+        for word,pos in nltk.pos_tag(nltk.word_tokenize(str(sentence))):
+            if (pos == 'NNP'):
+                nouns.append(word)
+    # print(nouns[-1:-3:-1])
+    name = ''
+    for i in nouns[-1:-3:-1][::-1]:
+        name += i + ' '
+    # print(name)
+
     tables = tabula.read_pdf(pdf_path, pages='all', multiple_tables=True)
 
     # Convert tables to JSON format
@@ -82,12 +102,14 @@ def func(pdf_path):
         filtered_data = filter_medical_reports(filtered_table_json)
         json_data.append({f"table_{i + 1}": filtered_data})
         table_names.append(f"table_{i + 1}")
-        
+    
+    json_data.append({'name': name})
     # Print JSON data
     # for i in json_data:
     #     for j in i:
     #         for k in i[j]:
     #             print(k)
+    print(json_data)
     return json_data
 
 if __name__ == '__main__':
