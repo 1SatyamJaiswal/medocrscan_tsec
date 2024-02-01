@@ -30,7 +30,7 @@ const upload = multer({
 router.post("/", upload, async (req, res) => {
   if (req.file) {
     const filepath =
-      "C:\\Users\\Prathamesh\\Desktop\\webdev\\medscannOCr\\medocrscan_tsec\\backend\\" + req.file.path;
+      "C:\\Users\\Prathamesh\\Desktop\\webdev\\medscannOCr\\New folder\\medocrscan_tsec\\backend\\" + req.file.path;
     const response = await fetch("http://localhost:5001/get_data", {
       method: "POST",
       headers: {
@@ -84,11 +84,18 @@ router.get("/getPatients/:name", async (req, res) => {
 
 })
 
-router.get('/tests/:name', async (req, res, next) => {
+router.get('/tests/:name/:testname', async (req, res, next) => {
   let test;
   const name = req.params.name;
   try {
-    test = (await Patient.find({ name: name }))[0].tests;
+    person = (await Patient.find({ name: name }));
+    for (let i = 0; i < person[0].tests.length; i++) {
+      console.log(Object.keys(person[0].tests[i])[0])
+      if (Object.keys(person[0].tests[i])[0] == req.params.testname) {
+        test = person[0].tests[i][Object.keys(person[0].tests[i])[0]];
+        break;
+      }
+    }
     // console.log(test)
   }
   catch (err) {
