@@ -1,7 +1,8 @@
 const express = require("express");
 // const cors = require("cors");
-const uploadRouter = express.Router();
+const router = express.Router();
 const multer = require("multer");
+const Patient = require("../models/patient");
 // const subprocess = require("subprocess");
 
 const storage2 = multer.diskStorage({
@@ -26,7 +27,7 @@ const upload = multer({
   storage: storage2,
 }).single("file");
 
-uploadRouter.post("/", upload, async (req, res) => {
+router.post("/", upload, async (req, res) => {
   if (req.file) {
     const filepath =
       "C:\\Users\\Prathamesh\\Desktop\\webdev\\medscannOCr\\medocrscan_tsec\\backend\\" + req.file.path;
@@ -59,4 +60,44 @@ uploadRouter.post("/", upload, async (req, res) => {
   console.log(req.file, req.body);
 });
 
-module.exports = uploadRouter;
+router.get("/getPatients", async (req, res) => {
+  try {
+
+    const arr = await Patient.find({})
+    res.json({ arr });
+  }
+  catch (error) {
+    console.log(error)
+  }
+
+})
+
+router.get("/getPatients/:name", async (req, res) => {
+  try {
+    const name = req.params.name
+    const data = await Patient.find({ name: name })
+    res.json({ data });
+  }
+  catch (error) {
+    console.log(error)
+  }
+
+})
+
+router.get('/tests/:name', async (req, res, next) => {
+  let test;
+  const name = req.params.name;
+  try {
+    test = (await Patient.find({ name: name }))[0].tests;
+    // console.log(test)
+  }
+  catch (err) {
+    console.log(err);
+  }
+  if (!test) {
+    return res.status(404).json({ message: "No patients found" })
+  }
+  return res.status(200).json({ test })
+})
+
+module.exports = router;

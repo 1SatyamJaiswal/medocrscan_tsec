@@ -13,5 +13,5 @@ app.use(cors());
 app.use('/upload', uploadRouter);
 
 app.listen(5000, () => {
-  console.log("Server started!");
+  console.log("Server started! at 5000");
 });

@@ -2,12 +2,18 @@ import regex as re
 from PyPDF2 import PdfReader
 
 from langchain import HuggingFaceHub
-llm = HuggingFaceHub(repo_id="google/flan-t5-xxl",model_kwargs={"temperature":0.4,"max_length":600}, huggingfacehub_api_token="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")
+
+
+from langchain.llms import GooglePalm
+
+api_key = "AIzaSyAVV4jTchLUVOoUyfOiRMGfExB7GjRBU4k"
+llm = GooglePalm(google_api_key=api_key, temperature=0.2)
 from langchain import PromptTemplate, LLMChain
 
-pdf_path = 'test2.pdf'
+pdf_path = "test2.pdf"
 
-def func():
+
+def func(file_path):
     text = ""
     pdf_reader = PdfReader(file_path)
     for page in pdf_reader.pages:
@@ -24,10 +30,20 @@ def func():
     ### Response:
     """
 
-    prompt = PromptTemplate(template=new_template, input_variables=["context", "question"])
+    prompt = PromptTemplate(
+        template=new_template, input_variables=["context", "question"]
+    )
     llm_chain = LLMChain(prompt=prompt, llm=llm)
 
-    return llm_chain.run({"context": pattern, "question":'Extract name, gender and age from the above text'})
+    resa = llm_chain.run(
+        {
+            "context": pattern,
+            "question": "Give me the name, age, gender, test name and Received date of the report of the patient in json format",
+        }
+    )
+    print(resa)
+    return resa
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     func(pdf_path)

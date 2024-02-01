@@ -3,6 +3,6 @@ const mongoose = require('mongoose');
 
 // dotenv.config();
 
-mongoose.connect("mongodb://127.0.0.1:27017/MedScan" ?? '').then(() => {
+mongoose.connect("mongodb+srv://navneetnair:tsechacks123@cluster0.qmajlh9.mongodb.net/MedScan" ?? '').then(() => {
     console.log("connected the database");
 });
